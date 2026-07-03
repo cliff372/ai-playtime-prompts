@@ -122,6 +122,7 @@ body::after {
   font-weight: bold;
   letter-spacing: -0.5px;
   margin-bottom: 20px;
+  text-align: center;
 }
 .hero h1 em { color: var(--teal); font-style: italic; }
 
@@ -142,7 +143,8 @@ body::after {
   font-size: clamp(15px, 2.4vw, 18px);
   color: var(--body);
   max-width: 620px;
-  margin-bottom: 28px;
+  margin: 0 auto 28px;
+  text-align: center;
 }
 .hero .lede strong { color: var(--white); font-weight: bold; }
 
