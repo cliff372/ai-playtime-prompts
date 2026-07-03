@@ -223,6 +223,24 @@
       if (e.key === "Escape" && modal.back.classList.contains("open")) closeModal();
     });
 
+    // Power toggle: gates the library, remembers state per visitor
+    var power = document.getElementById("power-toggle");
+    if (power) {
+      var root = document.documentElement;
+      power.setAttribute("aria-checked", root.classList.contains("lib-on") ? "true" : "false");
+      power.addEventListener("click", function () {
+        var on = !root.classList.contains("lib-on");
+        root.classList.toggle("lib-on", on);
+        root.classList.toggle("lib-off", !on);
+        power.setAttribute("aria-checked", on ? "true" : "false");
+        try { localStorage.setItem("aip_power", on ? "on" : "off"); } catch (e) {}
+        if (on) {
+          var lib = document.getElementById("library");
+          if (lib && lib.scrollIntoView) lib.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    }
+
     var t;
     els.search.addEventListener("input", function (e) {
       clearTimeout(t);

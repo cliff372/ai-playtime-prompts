@@ -175,6 +175,58 @@ body::after {
 }
 .btn-ghost:hover { color: var(--teal); border-color: var(--teal-line); }
 
+/* ---- Power toggle: gates the library on/off ---- */
+.power-toggle {
+  background: transparent; border: none; padding: 0;
+  cursor: pointer; display: inline-block; flex: 0 0 auto;
+}
+.pt-track {
+  position: relative; display: block;
+  width: 208px; height: 64px;
+  background: #f4f4f4; border-radius: 999px; padding: 6px;
+  transition: background .3s ease, box-shadow .3s ease;
+}
+.pt-knob {
+  position: absolute; top: 6px; left: 6px;
+  width: 52px; height: 52px; border-radius: 15px;
+  background: var(--teal);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 10px rgba(0,0,0,.28);
+  transition: transform .32s cubic-bezier(.34,1.4,.5,1);
+}
+.pt-knob svg { width: 25px; height: 25px; }
+.pt-txt {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  font-size: 21px; font-weight: bold; letter-spacing: 1px; color: #111;
+}
+.pt-off { right: 27px; }
+.pt-on { left: 29px; color: #0f6e56; opacity: 0; transition: opacity .2s ease; }
+
+/* OFF (default): pulse to invite the click */
+html.lib-off .pt-track { animation: ptPulse 1.9s ease-in-out infinite; }
+@keyframes ptPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(71,171,160,0); }
+  50%      { box-shadow: 0 0 26px 3px rgba(71,171,160,.5); }
+}
+/* ON */
+html.lib-on .pt-track { background: #dff3ef; }
+html.lib-on .pt-knob { transform: translateX(144px); }
+html.lib-on .pt-off { opacity: 0; }
+html.lib-on .pt-on { opacity: 1; }
+
+.power-cap { color: var(--muted); font-size: 13px; margin-top: 15px; letter-spacing: .3px; }
+html.lib-off .power-cap .cap-on { display: none; }
+html.lib-on .power-cap .cap-off { display: none; }
+
+/* Library gate — hidden until powered on. If JS is off, no html class is
+   set and the library shows normally (graceful fallback). */
+html.lib-off .library { display: none; }
+html.lib-on .library { animation: libRise .5s ease both; }
+@keyframes libRise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
 /* ============================ LIBRARY HEADER ============================= */
 
 .library { padding: 30px 0 90px; }
