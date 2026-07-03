@@ -106,20 +106,22 @@
         '</div>';
 
       var btn = card.querySelector(".copy-btn");
-      btn.addEventListener("click", function () { doCopy(p, btn); });
+      btn.addEventListener("click", function (e) { e.stopPropagation(); doCopy(p, btn); });
+      card.addEventListener("click", function () { openModal(p); });
       els.grid.appendChild(card);
     });
   }
 
   /* ---------------------------------- COPY --------------------------------- */
-  function doCopy(p, btn) {
+  function doCopy(p, btn, label) {
+    label = label || "Copy";
     function success() {
       trackCopy(p);
       btn.classList.add("copied");
       btn.innerHTML = CHECK_ICON + '<span>Copied!</span>';
       setTimeout(function () {
         btn.classList.remove("copied");
-        btn.innerHTML = COPY_ICON + '<span>Copy</span>';
+        btn.innerHTML = COPY_ICON + '<span>' + label + '</span>';
       }, 1600);
     }
     if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -146,6 +148,36 @@
         window.AIP.client.rpc("increment_copy_count", { prompt_id: p.id });
       }
     } catch (e) { /* ignore */ }
+  }
+
+  /* ---------------------------------- MODAL -------------------------------- */
+  var modal = {
+    back: document.getElementById("modal"),
+    title: document.getElementById("modal-title"),
+    tag: document.getElementById("modal-tag"),
+    text: document.getElementById("modal-text"),
+    badge: document.getElementById("modal-new"),
+    copy: document.getElementById("modal-copy"),
+    close: document.getElementById("modal-close")
+  };
+
+  function openModal(p) {
+    modal.title.textContent = p.title;
+    modal.tag.textContent = p.category;
+    modal.text.textContent = p.body;
+    modal.badge.style.display = (p.date && p.date === newestDate) ? "" : "none";
+    modal.copy.className = "copy-btn big";
+    modal.copy.innerHTML = COPY_ICON + '<span>Copy prompt</span>';
+    modal.copy.onclick = function () { doCopy(p, modal.copy, "Copy prompt"); };
+    modal.back.classList.add("open");
+    modal.back.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal() {
+    modal.back.classList.remove("open");
+    modal.back.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
   }
 
   /* --------------------------------- LOADING ------------------------------- */
@@ -181,6 +213,16 @@
   /* ---------------------------------- INIT --------------------------------- */
   function init() {
     document.getElementById("search-icon").innerHTML = SEARCH_ICON;
+
+    // Modal close: X button, click on backdrop, or Escape key
+    modal.close.addEventListener("click", closeModal);
+    modal.back.addEventListener("click", function (e) {
+      if (e.target === modal.back) closeModal();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && modal.back.classList.contains("open")) closeModal();
+    });
+
     var t;
     els.search.addEventListener("input", function (e) {
       clearTimeout(t);
