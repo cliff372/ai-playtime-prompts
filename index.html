@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Playtime — Prompt Library</title>
+  <meta name="description" content="A living archive of every weekly prompt from the AI Playtime newsletter. Browse, filter, and copy prompts to go play." />
+
+  <!-- Social / share preview -->
+  <meta property="og:title" content="AI Playtime — Prompt Library" />
+  <meta property="og:description" content="Every weekly AI Playtime prompt in one place. Find one that sparks something, copy it, and go play." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#000000" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="styles.css" />
+  <!-- SVG favicon: AI Playtime teal circle + white power glyph -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%2347ABA0'/%3E%3Cg fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M22 11.5a8 8 0 1 1-12 0'/%3E%3Cline x1='16' y1='7' x2='16' y2='16'/%3E%3C/g%3E%3C/svg%3E" />
+</head>
+<body>
+
+  <!-- ============================ LANDING / FRONT DOOR ==================== -->
+  <header class="hero">
+    <div class="wrap">
+      <div class="hero-top">
+        <a class="brand-row" href="#" aria-label="AI Playtime">
+          <span class="brand-logo" aria-hidden="true">
+            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="16" cy="16" r="16" fill="#47ABA0"/>
+              <g fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round">
+                <path d="M22 11.5a8 8 0 1 1-12 0"/>
+                <line x1="16" y1="7" x2="16" y2="16"/>
+              </g>
+            </svg>
+          </span>
+          <span class="brand-name">AI PLAYTIME</span>
+        </a>
+
+        <span class="kicker"><span class="dot" aria-hidden="true"></span>The Prompt Library</span>
+      </div>
+
+      <h1>Your weekly prompt,<br />ready to <span class="hl">play</span>.</h1>
+
+      <p class="lede">
+        A living archive of every prompt from the <strong>AI Playtime</strong> newsletter — one new one
+        each week. Scan, filter, find one that sparks something, and copy it to your clipboard.
+        <strong>That's the whole game.</strong>
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn-primary" href="#library">Browse the library &rarr;</a>
+        <a class="btn-ghost" href="https://aiplaytime.ai" target="_blank" rel="noopener">New here? Join AI Playtime</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================================ LIBRARY ============================ -->
+  <main class="library" id="library">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>The Library</h2>
+        <span class="count" id="count"></span>
+      </div>
+
+      <div class="search-box">
+        <span class="icon" id="search-icon" aria-hidden="true"></span>
+        <input id="search" type="search" placeholder="Search prompts…"
+               autocomplete="off" aria-label="Search prompts" />
+      </div>
+
+      <div class="filters" id="filters" role="group" aria-label="Filter by category"></div>
+
+      <div class="grid" id="grid"></div>
+    </div>
+  </main>
+
+  <!-- ================================= FOOTER ============================ -->
+  <footer class="site-foot">
+    <div class="wrap">
+      <span class="credit">Cliff Worley · AI Playtime · <a href="admin.html">Admin</a></span>
+      <span class="credit">New prompt every week · <a href="https://aiplaytime.ai" target="_blank" rel="noopener">Join the community</a></span>
+    </div>
+  </footer>
+
+  <!-- Supabase client, config, then app logic -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

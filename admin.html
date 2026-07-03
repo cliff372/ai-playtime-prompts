@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Playtime — Prompt Admin</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%2347ABA0'/%3E%3Cg fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M22 11.5a8 8 0 1 1-12 0'/%3E%3Cline x1='16' y1='7' x2='16' y2='16'/%3E%3C/g%3E%3C/svg%3E" />
+</head>
+<body class="admin">
+
+  <div class="wrap">
+    <!-- Header -->
+    <div class="admin-head">
+      <a class="brand-row" href="index.html" aria-label="AI Playtime">
+        <span class="brand-logo" aria-hidden="true">
+          <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16" cy="16" r="16" fill="#47ABA0"/>
+            <g fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round">
+              <path d="M22 11.5a8 8 0 1 1-12 0"/><line x1="16" y1="7" x2="16" y2="16"/>
+            </g>
+          </svg>
+        </span>
+        <span class="brand-name">AI PLAYTIME</span>
+      </a>
+      <span class="kicker"><span class="dot" aria-hidden="true"></span>Prompt Admin</span>
+    </div>
+
+    <!-- Not-configured notice -->
+    <div id="notconfigured" class="admin-note" style="display:none;">
+      <strong>Supabase isn't connected yet.</strong>
+      Add your Project URL and anon key to <code>config.js</code>, then reload. See <code>SETUP.md</code>.
+    </div>
+
+    <!-- LOGIN -->
+    <section id="login-view" class="admin-card" style="display:none;">
+      <h2>Sign in</h2>
+      <p class="muted-line">Only you can edit prompts. Enter the login you created in Supabase.</p>
+      <form id="login-form" autocomplete="on">
+        <label class="field">
+          <span>Email</span>
+          <input id="email" type="email" required autocomplete="username" placeholder="you@email.com" />
+        </label>
+        <label class="field">
+          <span>Password</span>
+          <input id="password" type="password" required autocomplete="current-password" placeholder="••••••••" />
+        </label>
+        <p id="login-error" class="form-error" role="alert"></p>
+        <button class="btn-primary" type="submit" id="login-btn">Sign in</button>
+      </form>
+    </section>
+
+    <!-- EDITOR -->
+    <section id="editor-view" style="display:none;">
+      <div class="editor-bar">
+        <div>
+          <h2 id="editor-title">Your prompts</h2>
+          <p class="muted-line" id="signed-as"></p>
+        </div>
+        <div class="editor-bar-actions">
+          <a class="btn-ghost" href="index.html" target="_blank" rel="noopener">View site ↗</a>
+          <button class="btn-ghost" id="signout-btn" type="button">Sign out</button>
+        </div>
+      </div>
+
+      <!-- Add / edit form -->
+      <form id="prompt-form" class="admin-card">
+        <h3 id="form-heading">Add a new prompt</h3>
+        <input type="hidden" id="edit-id" value="" />
+
+        <label class="field">
+          <span>Title</span>
+          <input id="f-title" type="text" required maxlength="120" placeholder="e.g. The Ruthless First-Draft Editor" />
+        </label>
+
+        <div class="field-row">
+          <label class="field">
+            <span>Category</span>
+            <input id="f-category" type="text" list="cat-list" required placeholder="Writing" />
+            <datalist id="cat-list"></datalist>
+          </label>
+          <label class="field">
+            <span>Date <small>(controls order &amp; the "New" badge)</small></span>
+            <input id="f-date" type="date" required />
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Prompt text</span>
+          <textarea id="f-body" required rows="6" placeholder="Paste the full prompt here…"></textarea>
+        </label>
+
+        <p id="form-error" class="form-error" role="alert"></p>
+        <div class="form-actions">
+          <button class="btn-primary" type="submit" id="save-btn">Add prompt</button>
+          <button class="btn-ghost" type="button" id="cancel-btn" style="display:none;">Cancel edit</button>
+        </div>
+      </form>
+
+      <!-- Existing prompts list -->
+      <div class="editor-list-head">
+        <h3>All prompts <span class="muted-line" id="list-count"></span></h3>
+      </div>
+      <div id="admin-list"></div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
