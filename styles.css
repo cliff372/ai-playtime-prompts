@@ -117,7 +117,7 @@ body::after {
 
 .hero h1 {
   font-size: clamp(34px, 7vw, 60px);
-  line-height: 0.98;
+  line-height: 1.14;
   color: var(--white);
   font-weight: bold;
   letter-spacing: -0.5px;
@@ -214,7 +214,16 @@ html.lib-on .pt-knob { transform: translateX(144px); }
 html.lib-on .pt-off { opacity: 0; }
 html.lib-on .pt-on { opacity: 1; }
 
-.power-cap { color: var(--muted); font-size: 13px; margin-top: 15px; letter-spacing: .3px; }
+.power-cap { font-size: 13px; margin-top: 15px; letter-spacing: .3px; }
+.power-cap .cap-off {
+  color: var(--teal);
+  font-weight: bold;
+  font-size: 15px;
+  letter-spacing: .4px;
+  animation: capPulse 1.8s ease-in-out infinite;
+}
+.power-cap .cap-on { color: var(--muted); }
+@keyframes capPulse { 0%, 100% { opacity: .68; } 50% { opacity: 1; } }
 html.lib-off .power-cap .cap-on { display: none; }
 html.lib-on .power-cap .cap-off { display: none; }
 
